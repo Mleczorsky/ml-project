@@ -11,4 +11,5 @@ Hopefully we will host interactive demo showind comprahansion of used algorithms
 
 - install requirements
 `pip install xd`
-- do something
+- download dataset:
+`python3 download_data.py`
