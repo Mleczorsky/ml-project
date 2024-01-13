@@ -14,6 +14,6 @@ Hopefully we will host interactive demo showind comprahansion of used algorithms
 ## How to run this project?
 
 - install requirements
-`pip install xd`
+`source install_requirements.sh`
 - download dataset:
 `python3 download_data.py`
