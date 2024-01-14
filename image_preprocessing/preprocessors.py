@@ -10,6 +10,10 @@ def grayscale_Dataset(dataset: np.array[Image]) -> np.array:
     return np.array(list(map(grayscale_Image, dataset)))
 
 
-def average(X: np.array[Image]) -> np.array:
-    X = grayscale_Dataset(X)
+def normalize_dataset(X : np.array) -> np.array:
     return X / X.mean(axis=1).reshape(-1, 1)
+
+
+def preprocess_dataset(X: np.array[Image]) -> np.array:
+    X = grayscale_Dataset(X)
+    return normalize_dataset(X)
