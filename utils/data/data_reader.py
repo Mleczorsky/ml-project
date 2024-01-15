@@ -5,7 +5,7 @@ from data_augmentation import augmentation_transform
 
 CLASS_NAMES = ['rock', 'paper', 'scissors']
 
-def read_dataset(dirpath='../data/rockpaperscissors', n_aug=3):
+def read_dataset(dirpath, n_aug=0):
     X, y = [], []
 
     for class_id, class_name in enumerate(CLASS_NAMES):
