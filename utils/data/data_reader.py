@@ -5,7 +5,10 @@ from data_augmentation import augmentation_transform
 
 CLASS_NAMES = ['rock', 'paper', 'scissors']
 
-def read_dataset(dirpath, n_aug=0):
+def read_dataset(dirpath, n_aug=0) -> np.array:
+    """
+    Return dataset as `np.array[PIL.Image]`
+    """
     X, y = [], []
 
     for class_id, class_name in enumerate(CLASS_NAMES):
