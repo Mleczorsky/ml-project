@@ -2,11 +2,12 @@
 
 \usepackage{babel, graphicx}
 \usepackage{tikz}
+\usepackage{subfig}
 \usepackage[T1]{fontenc}
 
 \usetheme{Frankfurt}
 
-\title{ \large{Rock-Paper-Scissors} \\ 
+\title{ \large{Rock-Paper-Scissors} \\
         \small{ML 2023/2024}}
 
 \author{
@@ -21,21 +22,11 @@
 \titlegraphic{
 \centering
 \includegraphics[height=1in, width=3in]{images/rock.png}
-% \includegraphics[height=1in, width=3in]{images/cursed_elmo.jpg}
-% \includegraphics[height=1.5in, width=4in]{images/obraz.png}
 }
-
-
-
 
 \begin{document}
 
-
 \maketitle
-
-
-
-
 
 \section{Main Goal}
 
@@ -45,11 +36,8 @@
         \item We decided to focus on the classification of images.
 
         \item Our main goal is to classify the gesture in the photo as one of the three movements from the "Rock-Paper-Scissors" game with best possible accuracy.
-        
     \end{itemize}
-
 \end{frame}
-
 
 \section{Data}
 
@@ -76,59 +64,32 @@
     \subfloat{\includegraphics[width=0.2\textwidth]{images/nozyce4.png}\label{fig:img4}}\hfill
     \subfloat{\includegraphics[width=0.2\textwidth]{images/nozyce5.png}\label{fig:img5}}
     \end{figure}
-
 \end{frame}
 
-
 \section{Methods}
-
 
 % \begin{frame}
 %     \frametitle{Methods}
 
 %     \begin{itemize}
 %         \item KNN
-        
+
 %         \item Clustering
 %         \item K-means
-        
+
 %         \item Naïve Bayes
-        
+
 %         \item Logistic Regression
-        
+
 %         \item Decision trees
 %         \item Random Forest
-        
+
 %         \item Support Vector Machine
 %         \item Gradient Boosting
 
 %     \end{itemize}
 
 % \end{frame}
-
-% \subsection{Clear dataset (no augmentation)}
-% \begin{frame}
-%     \frametitle{Clear dataset (no augmentation)}
-
-%     \begin{itemize}
-%         \item KNN - 
-%         \item Decision trees - 
-%         \item Random Forest - 
-%         \item XGBoost - 
-%         \item Support Vector Machine - 
-        
-%         % \item Clustering
-%         % \item K-means
-%         % \item Naïve Bayes
-%         % \item Logistic Regression
-%         % \item Gradient Boosting
-
-%     \end{itemize}
-
-% \end{frame}
-
-
-
 
 \begin{frame}
   \frametitle{Clear dataset (no augmentation)}
@@ -139,21 +100,20 @@
       \hline
       \textbf{Model} & \textbf{No PCA} & \textbf{PCA} \\
       \hline
-      KNN & 90.18\% & 91.09\% \\
+      KNN & 91.32\% & 91.55\% \\
       \hline
-      Decision tree & 81.73\% & 74.42\% \\
+      Decision tree & 84.02\% & 73.97\% \\
       \hline
-      Random Forest & 94.97\% & 89.95\% \\
+      Random Forest & 94.74\% & 90.18\% \\
       \hline
-      XGBoost & N/A & 91.32\% \\
+      XGBoost & N/A & 91.09\% \\
       \hline
-      Support Vector Machine & 66.21\% & 62.55\% \\
+      Support Vector Machine & 68.72\% & 68.03\% \\
       \hline
     \end{tabular}
   \end{table}
 
 \end{frame}
-
 
 \begin{frame}
   \frametitle{Augmented dataset}
@@ -170,22 +130,20 @@
       \hline
       \textbf{Model} & \textbf{No PCA} & \textbf{PCA} \\
       \hline
-      KNN & 67.33\% & 91.09\% \\
+      KNN & 68.59\% & 69.78\% \\
       \hline
-      Decision tree & 64.99\% & 74.42\% \\ 
+      Decision tree & 64.93\% & 58.59\% \\
       \hline
-      Random Forest & 86.17\% & 89.95\% \\
+      Random Forest & 86.41\% & 76.92\% \\
       \hline
-      XGBoost & N/A & 91.32\% \\
+      XGBoost & N/A & 87.26\% \\
       \hline
-      Support Vector Machine & \% & 62.55\% \\
+      Support Vector Machine & 43.86\% & 45.06\% \\
       \hline
     \end{tabular}
   \end{table}
 
 \end{frame}
-
-
 
 \begin{frame}
   \frametitle{What next?}
@@ -196,12 +154,11 @@
         \item Feature extraction
 
         \item Extened training set by self-made photos of hands.
-        
+
     \end{itemize}
 
     \centering
 \includegraphics[height=2in, width=3in]{images/real.png}
-  
 
 \end{frame}
 

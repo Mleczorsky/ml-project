@@ -1,5 +1,12 @@
-# locally installed datasets
-# data/
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
