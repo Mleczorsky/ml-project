@@ -14,6 +14,7 @@ Hopefully we will host interactive demo showind comprahansion of used algorithms
 ## How to run this project?
 
 - install requirements
-`source install_requirements.sh`
+  - linux `source install_requirements.sh`
+  - windows `install_requirements.ps1` *(might require changing running scripts policy)*
 - download dataset:
 `python3 download_data.py`
