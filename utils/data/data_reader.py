@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from PIL import Image
-from data_augmentation import augmentation_transform
+from .data_augmentation import augmentation_transform
 
 CLASS_NAMES = ['rock', 'paper', 'scissors']
 
