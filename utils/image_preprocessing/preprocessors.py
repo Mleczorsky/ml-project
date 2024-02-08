@@ -2,15 +2,15 @@ import numpy as np
 from PIL import Image
 
 
-def grayscale_Image(image: Image) -> np.array:
-    return np.array(image.resize((300, 200)).convert('L')).flatten()
+def grayscale_Image(image: Image, shape=(300, 200)) -> np.array:
+    return np.array(image.resize(shape).convert('L')).flatten()
 
 
-def grayscale_Dataset(dataset: np.array) -> np.array:
+def grayscale_Dataset(dataset: np.array, image_shape=(300, 200)) -> np.array:
     """
         X: `np.array[PIL.Image]`
     """
-    return np.array(list(map(grayscale_Image, dataset)))
+    return np.array(list(map(lambda img: grayscale_Image(img, image_shape), dataset)))
 
 
 def normalize_dataset(X : np.array) -> np.array:
@@ -20,9 +20,8 @@ def normalize_dataset(X : np.array) -> np.array:
     return X / X.mean(axis=1).reshape(-1, 1)
 
 
-def preprocess_dataset(X: np.array) -> np.array:
+def preprocess_dataset(X: np.array, image_shape=(300, 200)) -> np.array:
     """
         X: `np.array[PIL.Image]`
     """
-    X = grayscale_Dataset(X)
-    return normalize_dataset(X)
+    return normalize_dataset(grayscale_Dataset(X, image_shape))
