@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_geek():
-    return '<h1>Hello from Flask & Docker</h2>'
+    list_of_models = [f'<li> {model} <li>' for model in models]
+    return f'<h1>Hello from Flask & Docker</h1><ul>{list_of_models}</ul>'
 
 
 if __name__ == "__main__":
