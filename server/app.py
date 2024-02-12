@@ -34,10 +34,13 @@ def process():
 
     file = request.files['file']
     with Image.open(file.stream) as img:
-        chuj = img.copy()
+        img_cpy = img.copy()
 
-    x = extract(images=[chuj])
-    return CLASS_NAMES[models["knn"].predict(x).flatten()[0]], 200
+    feautures = extract(images=[img_cpy])
+
+    responses = { model: CLASS_NAMES[models[model].predict(feautures).flatten()[0]] for model in models }
+
+    return jsonify(responses), 200
 
 
 @app.route('/processing', methods=['GET'])
