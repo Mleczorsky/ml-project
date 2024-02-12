@@ -1,5 +1,9 @@
+import base64
+import numpy as np
+from PIL import (Image)
 from flask import Flask, render_template, request, jsonify
 from models import models
+from extract_features import extract
 # models = ['mock']
 
 app = Flask(__name__)
@@ -17,18 +21,40 @@ def photo():
 
 @app.route('/processing', methods=['POST'])
 def process():
-    print("Jebanie ruchanie obciąganie")
-    print(request.data)
-    # raise Exception(request.files["file"])
-    file = request.files["file"]
-    print(file)
-    prediction = models["decision_tree"].predict(file)
-    return jsonify([file, prediction, request.data]), 200
+    # print("Jebanie ruchanie obciąganie")
+    # print(request.data)
+    # # raise Exception(request.files["file"])
+    # # file = request.files["file"]
+    # # print(file)
+    # # prediction = models["decision_tree"].predict(file)
+    # # return jsonify([file, prediction, request.data]), 200
+    # return jsonify(list(request.files.keys())), 200
 
+    file = request.files['file']
+    with Image.open(file.stream) as img:
+
+    # data = file.stream.read()
+    # # data = base64.encodebytes(data)
+    # data = base64.b64encode(data).decode()
+        chuj = img.copy()
+    x = extract(images=np.array([chuj]))
+    return models["knn"].predict(x)
 @app.route('/processing', methods=['GET'])
 def chuj():
     print("Obciąganie")
-    return "Ruchanie"
+    file = request.files['file']
+    img = Image.open(file.stream)
+
+    data = file.stream.read()
+    # data = base64.encodebytes(data)
+    data = base64.b64encode(data).decode()
+
+    return jsonify({
+        'msg': 'success',
+        'size': [img.width, img.height],
+        'format': img.format,
+        'img': data
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

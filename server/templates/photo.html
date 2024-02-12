@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<form action="/processing" method="POST">
+<form action="/processing" method="POST" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" value="Prześlij obrazek">
 </form>
@@ -16,7 +16,7 @@
 
     async function sendPicture() {
         const data = new FormData();
-        data.append('file', file.files)
+        data.append('file', file.files[0])
         const options = {
             method: 'POST',
             body: data,
@@ -36,8 +36,8 @@
         previewPicture()
     })
     form.addEventListener("submit", (e) => {
-        e.preventDefault()
-        sendPicture()
+        // e.preventDefault()
+        // sendPicture()
     })
 </script>
 </body>
