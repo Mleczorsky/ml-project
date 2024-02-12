@@ -1,6 +1,6 @@
-from flask import Flask, render_template
-# from models import models
-models = ['mock']
+from flask import Flask, render_template, request, jsonify
+from models import models
+# models = ['mock']
 
 app = Flask(__name__)
 
@@ -17,20 +17,18 @@ def photo():
 
 @app.route('/processing', methods=['POST'])
 def process():
-    file = request.files['image']
+    print("Jebanie ruchanie obciąganie")
+    print(request.data)
+    # raise Exception(request.files["file"])
+    file = request.files["file"]
+    print(file)
+    prediction = models["decision_tree"].predict(file)
+    return jsonify([file, prediction, request.data]), 200
 
-    img = Image.open(file.stream)
-
-    data = file.stream.read()
-    # data = base64.encodebytes(data)
-    data = base64.b64encode(data).decode()
-
-    return jsonify({
-        'msg': 'success',
-        'size': [img.width, img.height],
-        'format': img.format,
-        'img': data
-    })
+@app.route('/processing', methods=['GET'])
+def chuj():
+    print("Obciąganie")
+    return "Ruchanie"
 
 if __name__ == "__main__":
     app.run(debug=True)

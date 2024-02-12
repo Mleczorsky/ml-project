@@ -5,10 +5,40 @@
 </head>
 <body>
 
-<form action="/processing" method="post">
-    <input type="file">
+<form action="/processing" method="POST">
+    <input type="file" name="file">
     <input type="submit" value="Prześlij obrazek">
 </form>
 
+<script>
+    const form = document.querySelector("form")
+    const file = document.querySelector("input[type=file]")
+
+    async function sendPicture() {
+        const data = new FormData();
+        data.append('file', file.files)
+        const options = {
+            method: 'POST',
+            body: data,
+            headers: {'Content-Type': 'multipart/form-data'}
+        }
+        console.log("Fetching...")
+        const resp = await fetch('/processing', options)
+        console.log("Fetched")
+        console.log(resp)
+    }
+
+    function previewPicture() {
+        console.log("Previewing picture")
+    }
+
+    file.addEventListener("change", (e) => {
+        previewPicture()
+    })
+    form.addEventListener("submit", (e) => {
+        e.preventDefault()
+        sendPicture()
+    })
+</script>
 </body>
 </html>
