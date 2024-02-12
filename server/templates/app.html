@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive demo</title>
+    <style>
+        body, html {
+            font-family: sans-serif;
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            min-height: 100%;
+        }
+        .wrapper{
+            min-height: 100vh;
+        }
+        .column, .row{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .row{
+            flex-direction: row;
+        }
+        img{
+            display: block;
+            max-width: 0%;
+            max-height: 0%;
+            overflow: hidden;
+            transition: 300ms;
+        }
+        img.visible{
+            display: block;
+            max-width: 80vw;
+            max-height: 50vh;
+        }
+        .classifier_row{
+            max-width: 0%;
+            overflow: hidden;
+            transition: 200ms ease-in-out;
+        }
+        .classifier_row > * {
+            padding: 0.5rem;
+            margin: 0.5rem 0rem;
+        }
+        .mBox{
+            background-color: orange;
+            font-weight: bold;
+            width: 9rem;
+            text-align: right;
+        }
+        .rBox{
+            background-color: #ffe18d;
+            width: 9rem
+        }
+        .classifier_row.visible{
+            max-width: 19rem;
+        }
+        .btns{
+            width: 19rem;
+            padding: 0.5rem;
+        }
+        .btns > * {
+            flex-grow: 1;
+            padding: 0.5rem;
+            font-weight: 900;
+        }
+
+    </style>
+</head>
+<body class="column">
+<div class="wrapper column">
+    <h1>
+        Machine learning
+    </h1>
+    <h2>
+        Rock, paper, scissors recognizer.
+    </h2>
+
+
+    <form class="column">
+        <input type="file" name="file" accept=".jpg,.png,.jpeg,.gif" style="display: none">
+        <img src="">
+        <div class="btns row">
+            <input type="button" class="choose" value="Choose file" onclick="document.querySelector('[name=file]').click()">
+            <input type="submit" class="upload" value="Upload file">
+        </div>
+    </form>
+    <response class="column">
+
+    </response>
+</div>
+
+<script>
+    const form = document.querySelector("form")
+    const file = document.querySelector("input[type=file]")
+    const picture = document.querySelector("img")
+    const respBox = document.querySelector("response")
+
+    function _createRequest() {
+        const data = new FormData();
+        data.append('file', file.files[0])
+        const options = {
+            method: 'POST',
+            body: data
+        }
+        return options
+    }
+
+    async function classifyPicture() {
+        request = _createRequest()
+        const response = await fetch('/process', request)
+        const parsed = await response.json()
+        return parsed
+    }
+
+    function previewPicture() {
+        picture.src = URL.createObjectURL(file.files[0])
+        picture.classList.add("visible")
+    }
+    function createClassifierRow(method, result){
+        const row = document.createElement("div")
+        row.classList.add("row")
+        row.classList.add("classifier_row")
+
+        const mBox = document.createElement("div")
+        mBox.classList.add("mBox")
+        mBox.innerText = method
+
+        const rBox = document.createElement("div")
+        rBox.classList.add("rBox")
+        rBox.innerText = result
+
+        row.appendChild(mBox)
+        row.appendChild(rBox)
+        return row
+    }
+    function renderResults(listOfResults){
+
+        listOfResults.map(({method, result}, i) => {
+            const row = createClassifierRow(method, result)
+            respBox.appendChild(row)
+
+            return row
+        }).forEach((row, i) => setTimeout(() => {
+                row.classList.add("visible");
+            }, 200*i))
+    }
+    file.addEventListener("change", (e) => {
+        previewPicture()
+    })
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault()
+        respBox.innerText = ""
+
+        const result = await classifyPicture()
+        const resultsList = Object.keys(result).map( e => ({
+            method:e,
+            result:result[e]}
+        ))
+        renderResults(resultsList)
+    })
+</script>
+</body>
+</html>

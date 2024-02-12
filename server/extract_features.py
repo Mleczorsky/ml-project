@@ -5,7 +5,6 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import Model
 import os
 
-
 # Load the VGG16 model
 model = vgg16.VGG16()
 
