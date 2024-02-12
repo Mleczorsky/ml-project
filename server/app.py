@@ -23,42 +23,28 @@ def photo():
 
 @app.route('/processing', methods=['POST'])
 def process():
-    # print("Jebanie ruchanie obciąganie")
-    # print(request.data)
-    # # raise Exception(request.files["file"])
-    # # file = request.files["file"]
-    # # print(file)
-    # # prediction = models["decision_tree"].predict(file)
-    # # return jsonify([file, prediction, request.data]), 200
-    # return jsonify(list(request.files.keys())), 200
-
     file = request.files['file']
     with Image.open(file.stream) as img:
         img_cpy = img.copy()
 
-    feautures = extract(images=[img_cpy])
+    features = extract(images=[img_cpy])
 
-    responses = { model: CLASS_NAMES[models[model].predict(feautures).flatten()[0]] for model in models }
+    responses = { model: CLASS_NAMES[models[model].predict(features).flatten()[0]] for model in models }
 
     return jsonify(responses), 200
 
 
 @app.route('/processing', methods=['GET'])
 def chuj():
-    print("Obciąganie")
     file = request.files['file']
-    img = Image.open(file.stream)
+    with Image.open(file.stream) as img:
+        img_cpy = img.copy()
 
-    data = file.stream.read()
-    # data = base64.encodebytes(data)
-    data = base64.b64encode(data).decode()
+    features = extract(images=[img_cpy])
 
-    return jsonify({
-        'msg': 'success',
-        'size': [img.width, img.height],
-        'format': img.format,
-        'img': data
-    })
+    responses = {model: CLASS_NAMES[models[model].predict(features).flatten()[0]] for model in models}
+
+    return jsonify(responses), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
