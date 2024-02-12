@@ -6,6 +6,8 @@ from models import models
 from extract_features import extract
 # models = ['mock']
 
+CLASS_NAMES = ['rock', 'paper', 'scissors']
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -32,13 +34,12 @@ def process():
 
     file = request.files['file']
     with Image.open(file.stream) as img:
-
-    # data = file.stream.read()
-    # # data = base64.encodebytes(data)
-    # data = base64.b64encode(data).decode()
         chuj = img.copy()
-    x = extract(images=np.array([chuj]))
-    return models["knn"].predict(x)
+
+    x = extract(images=[chuj])
+    return CLASS_NAMES[models["knn"].predict(x).flatten()[0]], 200
+
+
 @app.route('/processing', methods=['GET'])
 def chuj():
     print("Obciąganie")
